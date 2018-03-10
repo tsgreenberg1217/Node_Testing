@@ -33,6 +33,16 @@ app.post('/questions', (req,res)=>{
   })
 })
 
+app.post('/users', (req,res)=>{
+  let user = new User({
+    name: req.body.name,
+    password: req.body.password,
+
+  })
+  user.save()
+  .then(()=>{},(e)=>{})
+})
+
 app.listen(port,()=>{
   console.log('server up and running')
 })
