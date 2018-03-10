@@ -37,10 +37,11 @@ app.post('/users', (req,res)=>{
   let user = new User({
     name: req.body.name,
     password: req.body.password,
-
   })
   user.save()
-  .then(()=>{},(e)=>{})
+  .then(user => user.generateAuthToken())
+  .then(token => res.header('x-auth', token).send(user))
+  .catch(e => res.status(404).send(e))
 })
 
 app.listen(port,()=>{
