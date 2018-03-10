@@ -5,6 +5,7 @@ const bodyParser = require('body-parser')
 const mongoose = require('./db/mongoose')
 const {Question} = require('./models/question')
 const {User} = require('./models/user')
+const {authenticate} = require('./middleware/authenticate')
 const port = process.env.PORT || 3000
 
 
@@ -30,6 +31,15 @@ app.post('/questions', (req,res)=>{
     res.send(question)
   },(e)=>{
     res.status(400).send(e)
+  })
+})
+
+
+app.get('/users/me', (req,res) =>{
+  let token = req.header('x-auth')
+  User.findByToken(token)
+  .then(user => {
+    res.send(user)
   })
 })
 
