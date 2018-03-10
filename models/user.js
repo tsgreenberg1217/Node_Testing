@@ -3,6 +3,7 @@ const config = require('../config/keys')
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const jwt = require('jsonwebtoken')
+const _ = require('lodash')
 
 const UserSchema = new Schema({
   name: {
@@ -28,6 +29,13 @@ const UserSchema = new Schema({
     }
   }]
 })
+
+// overwrites previously method to only retrun certain things
+UserSchema.methods.toJSON = function(){
+  let user = this
+  let userObject = user.toObject()
+  return _.pick(user,['_id','name'])
+}
 
 //this is an instance method
 UserSchema.methods.generateAuthToken = function(){
