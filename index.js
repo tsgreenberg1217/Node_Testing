@@ -3,26 +3,30 @@ const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
 const mongoose = require('./db/mongoose')
-const {Todo} = require('./models/todo')
+const {Question} = require('./models/question')
+const {User} = require('./models/user')
+
 
 // Middleware
 // req.body will be from body parser
 app.use(bodyParser.json())
 
-app.get('/todos',(req,res)=>{
-  Todo.find().then((todos) => {
-    res.send({todos})
+app.get('/questions',(req,res)=>{
+  Question.find().then((question) => {
+    res.send({question})
   }, (e)=>{
     res.status(400).send(e)
   })
 })
 
-app.post('/todos', (req,res)=>{
-  let todo = new Todo({
-    text: req.body.text
+app.post('/questions', (req,res)=>{
+  let question = new Question({
+    prompt: req.body.prompt,
+    answer: req.body.answer,
+    choices: req.body.choices
   })
-  todo.save().then((todo)=>{
-    res.send(todo)
+  question.save().then((question)=>{
+    res.send(question)
   },(e)=>{
     res.status(400).send(e)
   })
