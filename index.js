@@ -5,6 +5,7 @@ const bodyParser = require('body-parser')
 const mongoose = require('./db/mongoose')
 const {Question} = require('./models/question')
 const {User} = require('./models/user')
+const port = process.env.PORT || 3000
 
 
 // Middleware
@@ -32,6 +33,6 @@ app.post('/questions', (req,res)=>{
   })
 })
 
-app.listen(3000,()=>{
+app.listen(port,()=>{
   console.log('server up and running')
 })
