@@ -1,7 +1,8 @@
 // models so mongoose knows hot to store data
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
-const Todo = mongoose.model('Todo',{
+
+const TodoSchema = new Schema({
   text: {
     type: String,
     required: true,
@@ -16,5 +17,7 @@ const Todo = mongoose.model('Todo',{
     default: null
   }
 })
+
+const Todo = mongoose.model('Todo', TodoSchema)
 
 module.exports = {Todo}
