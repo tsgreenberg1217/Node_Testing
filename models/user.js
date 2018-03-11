@@ -68,18 +68,24 @@ UserSchema.statics.findByToken = function(token){
   let User = this
   let decoded;
 
-  try{
-   decoded = jwt.verify(token,config.secret)
-  }catch (e){
-    return new Promise((resolve,reject) =>{
-      reject()
-    })
+  try{decoded = jwt.verify(token,config.secret)}
+  catch (e){return new Promise((resolve,reject) =>{reject()})
   }
 
   return User.findOne({
     '_id': decoded._id,
     'tokens.token':token,
     'tokens.access':'auth'
+  })
+}
+
+UserSchema.statics.checkPassword = function(entered_user){
+  let User = this
+  return User.findOne({'name': entered_user.name})
+  .then((user) =>{
+    if(!user){return Promise.reject()}
+    return bcrypt.compare(entered_user.password, user.password)
+    .then(res => {return res ? user : Promise.reject()})
   })
 }
 
