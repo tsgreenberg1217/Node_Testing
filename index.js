@@ -35,12 +35,8 @@ app.post('/questions', (req,res)=>{
 })
 
 
-app.get('/users/me', (req,res) =>{
-  let token = req.header('x-auth')
-  User.findByToken(token)
-  .then(user => {
-    res.send(user)
-  })
+app.get('/users/me', authenticate, (req,res) =>{
+  res.send(req.user)
 })
 
 app.post('/users', (req,res)=>{
