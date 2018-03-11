@@ -53,7 +53,7 @@ UserSchema.pre('save', function(next) {
 
 //this is an instance method
 UserSchema.methods.generateAuthToken = function(){
-  // i think this allows you to get the user form anywhere
+  // this lets you get the contex of the function, so the instance in this case
   let user = this
   const access = 'auth'
   const token = jwt.sign({_id: user._id.toHexString(), access},config.secret)
@@ -79,7 +79,7 @@ UserSchema.statics.findByToken = function(token){
   })
 }
 
-UserSchema.statics.checkPassword = function(entered_user){
+UserSchema.statics.verifyCreds = function(entered_user){
   let User = this
   return User.findOne({'name': entered_user.name})
   .then((user) =>{

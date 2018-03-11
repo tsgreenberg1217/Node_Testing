@@ -52,12 +52,12 @@ app.post('/users', (req,res)=>{
 
 app.post('/users/login', (req,res)=>{
   let e_user = {name: req.body.name, password:req.body.password}
-  User.checkPassword(e_user)
-  .then(user => {res.send(user)})
-  .catch(e=> {
-    console.log(e)
-    res.status(400).send(e)
+  User.verifyCreds(e_user)
+  .then(user => {
+     user.generateAuthToken()
+    .then(token => {res.header('x-auth', token).send(user)})
   })
+  .catch(e=> {res.status(400).send(e)})
 })
 
 app.listen(port,()=>{
