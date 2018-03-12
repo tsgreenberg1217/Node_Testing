@@ -1,18 +1,13 @@
 const mongoose = require('mongoose')
 const {Schema} = mongoose
 
-var subSchema = mongoose.Schema({
-    //your subschema content
+var resultSchema = new Schema({
+    question: {type: Schema.Types.ObjectId},
+    result:{type: Boolean}
 },{ _id : false });
 
 const SessionSchema = new Schema({
-  results:[
-    {
-      question:{
-      type: Schema.Types.ObjectId, ref: 'Question'
-    }
-  }
-  ]
+  results:[resultSchema]
 })
 
 const Session = mongoose.model('Session', SessionSchema)

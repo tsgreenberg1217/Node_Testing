@@ -8,9 +8,8 @@ const test = async function(){
   let q1 = qs[0]
   let newSession = new Session()
   newSession.results.push({question: q1})
-  // console.log('saved question:',newSession.results[0].question)
-  // newSession.results[0].correct = true
-  // console.log('answered:', newSession.results[0])
+  newSession.results[0].result = true
+  console.log(newSession.results[0])
   let s = await newSession.save()
 }
 test()
