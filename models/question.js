@@ -2,7 +2,7 @@
 const mongoose = require('mongoose')
 const validator = require('validator')
 
-const Schema = mongoose.Schema
+const {Schema} = mongoose
 
 const QuestionSchema = new Schema({
   prompt: {
@@ -15,13 +15,23 @@ const QuestionSchema = new Schema({
     required: true,
   },
   choices: {
-    type: [{
-      type: String
-    }],
+    type: [{type: String}],
     validate:{
-      validator: (value) => value.count === 3,
+      validator: (value) => value.length === 3,
       message: 'You need exactly 3 choices.'
     }
+  },
+  learnLink:{
+    type: String,
+    default:null
+  },
+  gifLink:{
+    type: String,
+    default: null
+  },
+  info:{
+    type: String,
+    default: null
   }
 })
 

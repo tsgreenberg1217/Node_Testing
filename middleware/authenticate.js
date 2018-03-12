@@ -4,8 +4,8 @@ const {User} = require('../models/user')
 
 
 const authenticate = (req,res,next)  =>{
-  // route wont run until next is called in middleware
-  let token = req.header('x-auth')
+  console.log(req.header('x-auth'))
+  let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YWE1OGU4NGU1MGExNzJhODY5NDJlZjYiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTIwODAxNzIxfQ.OCZrooZEhwEaaz8YhLQqEDO5T_qUg20v7xhYaF_fNio'
   User.findByToken(token).then((user) =>{
     if(!user){return Promise.reject()}
     // modifies req object

@@ -19,16 +19,7 @@ const UserSchema = new Schema({
     required: true,
     minlength: 6
   },
-  tokens:[{
-    access: {
-      type: String,
-      required: true
-    },
-    token:{
-      type: String,
-      required: true
-    }
-  }]
+  sessions:[{ type: Schema.Types.ObjectId, ref: 'Session' }]
 })
 
 // overwrites previously method to only retrun certain things
@@ -57,7 +48,7 @@ UserSchema.methods.generateAuthToken = function(){
   let user = this
   const access = 'auth'
   const token = jwt.sign({_id: user._id.toHexString(), access},config.secret)
-  user.tokens.push({access,token})
+  // user.tokens.push({access,token})
 
   return user.save()
   .then(() => token)
@@ -69,13 +60,10 @@ UserSchema.statics.findByToken = function(token){
   let decoded;
 
   try{decoded = jwt.verify(token,config.secret)}
-  catch (e){return new Promise((resolve,reject) =>{reject()})
-  }
+  catch (e){return new Promise((resolve,reject) =>{reject()})}
 
   return User.findOne({
-    '_id': decoded._id,
-    'tokens.token':token,
-    'tokens.access':'auth'
+    '_id': decoded._id
   })
 }
 

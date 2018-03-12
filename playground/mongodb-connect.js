@@ -1,15 +1,16 @@
-const url = 'mongodb://localhost:27017/TodoApp'
-const {MongoClient, ObjectID} = require('mongodb')
-MongoClient.connect(url, (err, client)=>{
-  if(err){return  console.log('unable to connect')}
+const {mongoose} = require('../db/mongoose')
+const {Question} = require('../models/question')
+const {User} = require('../models/user')
+const {Session} = require('../models/session')
 
-  const db = client.db('TodoApp')
-  db.collection('Todos').findOneAndUpdate({
-    _id: new ObjectID('5aa2f42ad62cf112c020c817')
-  },{
-    $set:{completed: true}
-  },{
-    returnOriginal: false
-  }).then((result) => {console.log(result)})
-  client.close()
-})
+const test = async function(){
+  let qs = await Question.find()
+  let q1 = qs[0]
+  let newSession = new Session()
+  newSession.results.push({question: q1})
+  // console.log('saved question:',newSession.results[0].question)
+  // newSession.results[0].correct = true
+  // console.log('answered:', newSession.results[0])
+  let s = await newSession.save()
+}
+test()
