@@ -6,7 +6,7 @@ const mongoose = require('./db/mongoose')
 const {Question} = require('./models/question')
 const {User} = require('./models/user')
 const {authenticate} = require('./middleware/authenticate')
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 5000
 
 
 // Middleware
