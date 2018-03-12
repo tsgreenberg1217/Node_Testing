@@ -8,6 +8,12 @@ const {User} = require('./models/user')
 const {authenticate} = require('./middleware/authenticate')
 const port = process.env.PORT || 5000
 
+// enable CORS
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 // Middleware
 // req.body will be from body parser
